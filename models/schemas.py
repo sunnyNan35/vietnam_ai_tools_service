@@ -1,0 +1,45 @@
+from pydantic import BaseModel
+from typing import Optional
+from datetime import datetime
+
+
+class CategoryOut(BaseModel):
+    id: str
+    slug: str
+    name_vi: str
+    name_en: str
+    icon: str
+    sort_order: int
+
+
+class ToolOut(BaseModel):
+    id: str
+    slug: str
+    name: str
+    category_id: Optional[str] = None
+    description_vi: Optional[str] = None
+    description_en: Optional[str] = None
+    thumbnail_url: Optional[str] = None
+    pricing: str
+    tags: list[str]
+    featured: bool
+    status: str
+    source: str
+    click_count: int
+    created_at: datetime
+    # affiliate_url intentionally excluded
+
+
+class ToolDetailOut(ToolOut):
+    website_url: str
+
+
+class ClickResponse(BaseModel):
+    affiliate_url: str
+
+
+class ToolListResponse(BaseModel):
+    items: list[ToolOut]
+    total: int
+    page: int
+    limit: int
