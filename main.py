@@ -26,3 +26,8 @@ app.add_middleware(
 app.include_router(categories.router)
 app.include_router(tools.router)
 app.include_router(search.router)
+
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
