@@ -203,7 +203,7 @@ def generate_sql(tools: list[dict]) -> str:
 
         lines.append(f"  SELECT id INTO cat_id FROM categories WHERE slug = '{cat_slug}';")
         lines.append(f"  INSERT INTO tools (id, slug, name, description_en, description_vi, website_url, affiliate_url, thumbnail_url, pricing, tags, category_id, featured, status, source, click_count)")
-        lines.append(f"  VALUES ('{tool['id']}', '{slug}', '{name}', '{desc_en}', '{desc_vi}', '{website_url}', '{affiliate_url}', '{thumbnail_url}', '{tool['pricing']}', '{tags_json}'::jsonb, cat_id, {str(tool['featured']).lower()}, '{tool['status']}', '{tool['source']}', {tool['click_count']})")
+        lines.append(f"  VALUES ('{tool['id']}', '{slug}', '{name}', '{desc_en}', '{desc_vi}', '{website_url}', '{affiliate_url}', '{thumbnail_url}', '{tool['pricing']}', ARRAY[]::text[], cat_id, {str(tool['featured']).lower()}, '{tool['status']}', '{tool['source']}', {tool['click_count']})")
         lines.append(f"  ON CONFLICT (slug) DO NOTHING;")
         lines.append("")
 
