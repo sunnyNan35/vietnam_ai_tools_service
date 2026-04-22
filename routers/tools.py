@@ -1,12 +1,15 @@
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Request
 from database import get_supabase
 from models.schemas import ToolOut, ToolDetailOut, ClickResponse, ToolListResponse
+from middleware import limiter, is_duplicate_click
+from slowapi.util import get_remote_address
 
 router = APIRouter(prefix="/api/tools", tags=["tools"])
 
 
 @router.get("/featured", response_model=list[ToolOut])
-def get_featured_tools():
+#@limiter.limit("60/minute")
+def get_featured_tools(request: Request):
     sb = get_supabase()
     result = (
         sb.table("tools")
@@ -20,7 +23,9 @@ def get_featured_tools():
 
 
 @router.get("", response_model=ToolListResponse)
+#@limiter.limit("60/minute")
 def list_tools(
+    request: Request,
     category: str | None = Query(None),
     pricing: str | None = Query(None),
     page: int = Query(1, ge=1),
@@ -50,7 +55,8 @@ def list_tools(
 
 
 @router.get("/{slug}", response_model=ToolDetailOut)
-def get_tool(slug: str):
+#@limiter.limit("60/minute")
+def get_tool(request: Request, slug: str):
     sb = get_supabase()
     result = (
         sb.table("tools")
@@ -66,17 +72,23 @@ def get_tool(slug: str):
 
 
 @router.post("/{tool_id}/click", response_model=ClickResponse)
-def track_click(tool_id: str):
+# @limiter.limit("20/minute")
+def track_click(request: Request, tool_id: str):
+    ip = get_remote_address(request)
+    """
+    if is_duplicate_click(ip, tool_id):
+        raise HTTPException(status_code=429, detail="Duplicate click")
+    """
     sb = get_supabase()
     result = (
         sb.table("tools")
-        .select("affiliate_url, click_count")
+        .select("website_url, click_count")
         .eq("id", tool_id)
         .single()
         .execute()
     )
-    if not result.data or not result.data.get("affiliate_url"):
-        raise HTTPException(status_code=404, detail="Tool not found or no affiliate URL")
+    if not result.data or not result.data.get("website_url"):
+        raise HTTPException(status_code=404, detail="Tool not found or no website URL")
     new_count = (result.data.get("click_count") or 0) + 1
     sb.table("tools").update({"click_count": new_count}).eq("id", tool_id).execute()
-    return ClickResponse(affiliate_url=result.data["affiliate_url"])
+    return ClickResponse(affiliate_url=result.data["website_url"])

@@ -25,9 +25,10 @@ class ToolOut(BaseModel):
     featured: bool
     status: str
     source: str
+    website_url: str
+    affiliate_url: Optional[str] = None
     click_count: int
     created_at: datetime
-    # affiliate_url intentionally excluded
 
 
 class ToolDetailOut(ToolOut):
