@@ -7,7 +7,7 @@ router = APIRouter(prefix="/api/categories", tags=["categories"])
 
 
 @router.get("", response_model=list[CategoryOut])
-@limiter.limit("60/minute")
+# @limiter.limit("60/minute")
 def list_categories(request: Request):
     sb = get_supabase()
     result = sb.table("categories").select("*").order("sort_order").execute()

@@ -6,6 +6,19 @@ from slowapi.util import get_remote_address
 
 router = APIRouter(prefix="/api/tools", tags=["tools"])
 
+# Join string: fetch categories via junction table
+_TOOL_SELECT = "*, tool_categories(categories(slug, name_vi, icon))"
+
+
+def _resolve_category_ids(sb, category_slug: str) -> list[str]:
+    """Return all tool IDs that belong to a given category slug."""
+    cat = sb.table("categories").select("id").eq("slug", category_slug).single().execute()
+    if not cat.data:
+        return []
+    cat_id = cat.data["id"]
+    rows = sb.table("tool_categories").select("tool_id").eq("category_id", cat_id).execute()
+    return [r["tool_id"] for r in (rows.data or [])]
+
 
 @router.get("/featured", response_model=list[ToolOut])
 #@limiter.limit("60/minute")
@@ -13,7 +26,7 @@ def get_featured_tools(request: Request):
     sb = get_supabase()
     result = (
         sb.table("tools")
-        .select("*, categories(slug, name_vi, icon)")
+        .select(_TOOL_SELECT)
         .eq("status", "published")
         .eq("featured", True)
         .order("created_at", desc=True)
@@ -35,13 +48,14 @@ def list_tools(
     offset = (page - 1) * limit
     q = (
         sb.table("tools")
-        .select("*, categories(slug, name_vi, icon)", count="exact")
+        .select(_TOOL_SELECT, count="exact")
         .eq("status", "published")
     )
     if category:
-        cat = sb.table("categories").select("id").eq("slug", category).single().execute()
-        if cat.data:
-            q = q.eq("category_id", cat.data["id"])
+        tool_ids = _resolve_category_ids(sb, category)
+        if not tool_ids:
+            return ToolListResponse(items=[], total=0, page=page, limit=limit)
+        q = q.in_("id", tool_ids)
     if pricing:
         q = q.eq("pricing", pricing)
     q = q.order("created_at", desc=True).range(offset, offset + limit - 1)
@@ -60,7 +74,7 @@ def get_tool(request: Request, slug: str):
     sb = get_supabase()
     result = (
         sb.table("tools")
-        .select("*, categories(slug, name_vi, icon)")
+        .select(_TOOL_SELECT)
         .eq("slug", slug)
         .eq("status", "published")
         .single()
