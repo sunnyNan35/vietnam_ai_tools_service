@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import json; data=json.load\\(open\\('freeai_categories_tools.json'\\)\\); print\\(f'Total items: {len\\(data\\)}'\\)\")",
+      "Bash(python -c \"import json; data=json.load\\(open\\('freeai_categories_tools.json', encoding='utf-8'\\)\\); print\\(f'Total items: {len\\(data\\)}'\\)\")",
+      "Bash(python download_images.py)"
+    ]
+  }
+}

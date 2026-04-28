@@ -99,39 +99,6 @@
     "source_url": "https://www.freeai.run/product/happyhorse-ai-video-generator"
   },
   {
-    "id": "7028dc37-2522-505b-a180-898d7dcc4351",
-    "slug": "indexofai",
-    "name": "IndexOf.AI",
-    "tagline": "Discover, Explore & Submit the Best AI Tools",
-    "logo_url": "https://cdn.freeai.run/product-logos/logo-1776510438258-emx3l2.png",
-    "cover_url": "https://cdn.freeai.run/product-screenshots/screenshot-1776510440892-dp0v03.png",
-    "website_url": "https://indexof.ai",
-    "pricing": "Free",
-    "categories": [
-      {
-        "slug": "artificial-intelligence",
-        "name": "Artificial intelligence"
-      },
-      {
-        "slug": "directory",
-        "name": "Directory"
-      },
-      {
-        "slug": "marketing",
-        "name": "Marketing"
-      }
-    ],
-    "tags": [
-      "artificial-intelligence",
-      "directory",
-      "marketing"
-    ],
-    "rating": null,
-    "is_featured": false,
-    "is_new": false,
-    "source_url": "https://www.freeai.run/product/indexofai"
-  },
-  {
     "id": "6818afc4-36af-5d3d-a627-3a248b0c009f",
     "slug": "happy-oyster-ai",
     "name": "Happy Oyster AI",
@@ -278,7 +245,7 @@
     "tagline": "AI-powered tarot readings and astrological insights to unlock your destiny.",
     "logo_url": "https://cdn.freeai.run/product-logos/logo-1775509804750-ukh1dx.png",
     "cover_url": "https://cdn.freeai.run/product-screenshots/screenshot-1775509839079-bnr4w0.png",
-    "website_url": "https://esotericai.xyz?ref=freeai.run",
+    "website_url": "https://esotericai.xyz",
     "pricing": "Freemium",
     "categories": [
       {
@@ -303,39 +270,6 @@
     "is_featured": false,
     "is_new": false,
     "source_url": "https://www.freeai.run/product/esotericai"
-  },
-  {
-    "id": "9db2ea5c-d43b-550d-ad37-064f2fa0eda9",
-    "slug": "open-launch",
-    "name": "Open-Launch",
-    "tagline": "Open Launch - Discover the Best Tech Products",
-    "logo_url": "https://open-launch.com/api/badge/ac10eda8-f10d-4097-a902-0ac53623692e/featured-light.svg",
-    "cover_url": "https://cdn.freeai.run/product-screenshots/screenshot-1775477124266-4xsj9a.png",
-    "website_url": "https://open-launch.com/projects/free-ai-tools",
-    "pricing": "Freemium",
-    "categories": [
-      {
-        "slug": "directory",
-        "name": "Directory"
-      },
-      {
-        "slug": "artificial-intelligence",
-        "name": "Artificial intelligence"
-      },
-      {
-        "slug": "productivity",
-        "name": "Productivity"
-      }
-    ],
-    "tags": [
-      "directory",
-      "artificial-intelligence",
-      "productivity"
-    ],
-    "rating": null,
-    "is_featured": false,
-    "is_new": false,
-    "source_url": "https://www.freeai.run/product/open-launch"
   },
   {
     "id": "2c24437e-85bd-5528-88ba-ffaf1378a149",
