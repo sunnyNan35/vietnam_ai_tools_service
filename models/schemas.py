@@ -92,7 +92,7 @@ class AdminLoginRequest(BaseModel):
 
 class AdminLoginResponse(BaseModel):
     token: str
-    expires_at: datetime
+    expires_at: int
 
 
 class ToolCreateUpdate(BaseModel):

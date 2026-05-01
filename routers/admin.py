@@ -1,8 +1,7 @@
 import hashlib
 import secrets
 import time
-from datetime import datetime
-from fastapi import APIRouter, HTTPException, Request, status, Depends
+from fastapi import APIRouter, HTTPException, Request, status
 from database import get_supabase
 from config import settings
 from models.schemas import AdminLoginRequest, AdminLoginResponse, ToolCreateUpdate, ToolOut
@@ -25,12 +24,14 @@ def admin_login(req: AdminLoginRequest):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid password")
 
     token = secrets.token_urlsafe(32)
-    expires_at = time.time() + ADMIN_TOKEN_EXPIRES_IN
-    add_admin_token(token, expires_at)
+    expires_at_seconds = time.time() + ADMIN_TOKEN_EXPIRES_IN
+    add_admin_token(token, expires_at_seconds)
 
+    # Return milliseconds timestamp (13 digits) for easier frontend comparison
+    expires_at_ms = int(expires_at_seconds * 1000)
     return AdminLoginResponse(
         token=token,
-        expires_at=datetime.utcfromtimestamp(expires_at)
+        expires_at=expires_at_ms
     )
 
 
