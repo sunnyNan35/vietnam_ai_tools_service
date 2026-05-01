@@ -7,6 +7,7 @@ class Settings(BaseSettings):
     cors_origins: str = "http://localhost:5173"
     render_external_url: str = ""
     admin_password: str
+    url_host: str = ""
 
     @property
     def cors_origins_list(self) -> list[str]:

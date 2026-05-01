@@ -1,6 +1,7 @@
 from pydantic import BaseModel, model_validator
 from typing import Optional, Any
 from datetime import datetime
+from config import settings
 
 
 class CategoryOut(BaseModel):
@@ -53,6 +54,15 @@ class ToolOut(BaseModel):
         data["categories"] = categories
         return data
 
+    @model_validator(mode="after")
+    def add_url_host_prefix(self) -> "ToolOut":
+        if settings.url_host:
+            if self.affiliate_url and not self.affiliate_url.startswith("http"):
+                self.affiliate_url = settings.url_host + self.affiliate_url
+            if self.thumbnail_url and not self.thumbnail_url.startswith("http"):
+                self.thumbnail_url = settings.url_host + self.thumbnail_url
+        return self
+
 
 class ToolDetailOut(ToolOut):
     website_url: str
@@ -60,6 +70,13 @@ class ToolDetailOut(ToolOut):
 
 class ClickResponse(BaseModel):
     affiliate_url: str
+
+    @model_validator(mode="after")
+    def add_url_host_prefix(self) -> "ClickResponse":
+        if settings.url_host:
+            if self.affiliate_url and not self.affiliate_url.startswith("http"):
+                self.affiliate_url = settings.url_host + self.affiliate_url
+        return self
 
 
 class ToolListResponse(BaseModel):
