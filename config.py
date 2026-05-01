@@ -6,6 +6,7 @@ class Settings(BaseSettings):
     supabase_service_key: str
     cors_origins: str = "http://localhost:5173"
     render_external_url: str = ""
+    admin_password: str
 
     @property
     def cors_origins_list(self) -> list[str]:

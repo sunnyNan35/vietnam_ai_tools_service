@@ -5,7 +5,7 @@ from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from config import settings
 from middleware import limiter, BotBlockMiddleware
-from routers import categories, tools, search
+from routers import categories, tools, search, admin
 from scraper.scheduler import create_scheduler
 
 
@@ -33,6 +33,7 @@ app.add_middleware(
 app.include_router(categories.router)
 app.include_router(tools.router)
 app.include_router(search.router)
+app.include_router(admin.router)
 
 
 @app.get("/health")

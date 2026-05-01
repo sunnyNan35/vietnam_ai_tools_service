@@ -67,3 +67,28 @@ class ToolListResponse(BaseModel):
     total: int
     page: int
     limit: int
+
+
+class AdminLoginRequest(BaseModel):
+    password: str
+
+
+class AdminLoginResponse(BaseModel):
+    token: str
+    expires_at: datetime
+
+
+class ToolCreateUpdate(BaseModel):
+    name: str
+    slug: str
+    description_vi: str
+    category_ids: list[str] = []
+    website_url: str
+    pricing: str = "unknown"
+    tags: list[str] = []
+    status: str = "draft"
+    featured: bool = False
+    affiliate_url: Optional[str] = None
+    description_en: Optional[str] = None
+    source: str = "manual"
+    thumbnail_url: Optional[str] = None
