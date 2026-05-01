@@ -30,7 +30,7 @@ def admin_login(req: AdminLoginRequest):
 
     return AdminLoginResponse(
         token=token,
-        expires_at=datetime.fromtimestamp(expires_at)
+        expires_at=datetime.utcfromtimestamp(expires_at)
     )
 
 
